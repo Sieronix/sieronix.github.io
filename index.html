@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omar Samha | Senior Software Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base Styles & Custom Properties */
+        :root {
+            --background: #0a0a0a;
+            --foreground: #f4f4f5;
+            --card: rgba(24, 24, 27, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --primary-gradient: linear-gradient(90deg, #38bdf8, #818cf8);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            overflow-x: hidden;
+        }
+
+        /* Interactive Canvas Background */
+        #interactive-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2; /* Slightly increased opacity for better effect */
+        }
+
+        /* Glassmorphism Card Effect */
+        .card-bg {
+            background-color: var(--card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Typewriter Cursor */
+        .typewriter-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+            color: #818cf8;
+        }
+
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: #818cf8; }
+        }
+
+        /* Section Fade-in Animation on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--background); }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+    </style>
+</head>
+
+<body class="antialiased">
+    <canvas id="interactive-bg"></canvas>
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center card-bg mt-4 rounded-xl">
+            <a href="#" class="text-2xl font-bold font-mono gradient-text">OS;</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="hover:text-sky-400 transition-colors">About</a>
+                <a href="#skills" class="hover:text-sky-400 transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-sky-400 transition-colors">Projects</a>
+            </div>
+             <a href="#contact" class="hidden md:block bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-2 px-4 rounded-lg transition-colors border border-zinc-700">
+                Contact Me
+            </a>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-zinc-800 transition-colors">
+                 <i data-lucide="menu"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden container mx-auto px-6 mt-2">
+            <div class="card-bg rounded-xl p-4 flex flex-col space-y-4">
+                 <a href="#about" class="hover:text-sky-400 transition-colors">About</a>
+                 <a href="#skills" class="hover:text-sky-400 transition-colors">Skills</a>
+                 <a href="#projects" class="hover:text-sky-400 transition-colors">Projects</a>
+                 <a href="#contact" class="bg-zinc-800 text-center hover:bg-zinc-700 text-white font-medium py-2 px-4 rounded-lg transition-colors border border-zinc-700">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col justify-center items-start text-left pt-20">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black mb-4">
+                <span class="gradient-text">Omar Samha</span>
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-mono mb-8 typewriter-cursor" id="typewriter"></h2>
+            <p class="max-w-3xl text-lg text-zinc-400 mb-8 leading-relaxed">
+                I transform complex problems into elegant software solutions. With over a decade of hands-on experience, I build fast, scalable, and impactful applications for the modern web.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                 <a href="#projects" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                    <i data-lucide="folder-git-2"></i> View My Work
+                </a>
+                <a href="https://github.com/Sieronix" target="_blank" rel="noopener noreferrer" class="bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-3 px-6 rounded-lg transition-colors border border-zinc-700 flex items-center justify-center gap-2">
+                    <i data-lucide="github"></i> GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-24 lg:py-32 reveal">
+            <div class="grid md:grid-cols-5 gap-12 items-center">
+                <div class="md:col-span-2">
+                    <div class="max-w-sm mx-auto">
+                        <img src="profilepic.png" alt="Omar Samha" class="rounded-xl w-full object-cover aspect-square">
+                    </div>
+                </div>
+                <div class="md:col-span-3">
+                    <h2 class="text-3xl md:text-4xl font-bold tracking-tighter mb-4">About Me</h2>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">
+                        Hello! I'm Omar, and I build cool things with code. My journey into tech wasn't a straight line; it was more like a caffeinated spiral that started with a simple "Hello World" and quickly escalated into a full-blown obsession with turning ideas into reality.
+                    </p>
+                    <p class="text-zinc-400 mb-4 leading-relaxed">
+                        For the last 4 years, I've been a digital chameleon in the professional world. Working with a diverse range of clients means I've had the thrill of parachuting into countless unique projects and systems. One week I'm architecting a robust back-end for a real-time game, the next I'm diving deep into a time-series model for financial predictions. This constant variety has made me a rapid learner and a master of adaptation, always excited to pick up the right tool for the job.
+                    </p>
+                    <p class="text-zinc-400 mb-6 leading-relaxed">
+                        I live for the challenge of untangling a complex problem and weaving it into an elegant, high-performance solution. I'm not just a developer; I'm a digital craftsman, passionate about building software that is not only powerful but also a joy to use.
+                    </p>
+                     <div class="flex space-x-4">
+                        <a href="https://github.com/Sieronix" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-sky-400 transition-colors"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="https://www.linkedin.com/in/omar-samha-b85911206" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-sky-400 transition-colors"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-24 lg:py-32 reveal">
+            <div class="text-center mb-16">
+                 <h2 class="text-3xl md:text-4xl font-bold tracking-tighter">My Tech Arsenal</h2>
+                 <p class="text-lg text-zinc-400 mt-2">Tools and technologies I use to build things.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Frontend Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="monitor-smartphone" class="w-8 h-8 text-sky-400"></i>
+                        <h3 class="text-xl font-bold ml-3">Front-End</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-sky-500/10 text-sky-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">CSS3</span>
+                        <span class="bg-sky-500/10 text-sky-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">HTML5</span>
+                        <span class="bg-sky-500/10 text-sky-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">JavaScript</span>
+                        <span class="bg-sky-500/10 text-sky-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">React</span>
+                        <span class="bg-sky-500/10 text-sky-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Three.js</span>
+                    </div>
+                </div>
+                 <!-- Backend Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="server" class="w-8 h-8 text-green-400"></i>
+                        <h3 class="text-xl font-bold ml-3">Back-End</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">C++</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Express.js</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">FastAPI</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Flask</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">GraphQL</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Node.js</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">PHP</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Python</span>
+                        <span class="bg-green-500/10 text-green-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">RESTful APIs</span>
+                    </div>
+                </div>
+                 <!-- Databases Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="database" class="w-8 h-8 text-purple-400"></i>
+                        <h3 class="text-xl font-bold ml-3">Databases</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-purple-500/10 text-purple-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">MongoDB</span>
+                        <span class="bg-purple-500/10 text-purple-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">MySQL</span>
+                        <span class="bg-purple-500/10 text-purple-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">NoSQL</span>
+                        <span class="bg-purple-500/10 text-purple-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">PostgreSQL</span>
+                        <span class="bg-purple-500/10 text-purple-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Redis</span>
+                    </div>
+                </div>
+                 <!-- Cloud & DevOps Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="cloud-cog" class="w-8 h-8 text-orange-400"></i>
+                        <h3 class="text-xl font-bold ml-3">Cloud & DevOps</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Apache Spark</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">AWS</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">AWS EC2</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Docker</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Git & GitHub</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Google Cloud</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Kubernetes</span>
+                        <span class="bg-orange-500/10 text-orange-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Lambda</span>
+                    </div>
+                </div>
+                 <!-- AI/ML Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="brain-circuit" class="w-8 h-8 text-indigo-400"></i>
+                        <h3 class="text-xl font-bold ml-3">AI & Machine Learning</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">CUDA</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Keras</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Numpy</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Pandas</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">PyTorch</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Sci-kit Learn</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">TensorFlow</span>
+                        <span class="bg-indigo-500/10 text-indigo-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Transformers</span>
+                    </div>
+                </div>
+                <!-- Specialized Tools Card -->
+                <div class="card-bg p-6 rounded-xl h-full flex flex-col transition-transform duration-300 transform hover:-translate-y-2">
+                    <div class="flex items-center mb-4">
+                        <i data-lucide="puzzle" class="w-8 h-8 text-pink-400"></i>
+                        <h3 class="text-xl font-bold ml-3">Specialized Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-pink-500/10 text-pink-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Electron</span>
+                        <span class="bg-pink-500/10 text-pink-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">MQL4</span>
+                        <span class="bg-pink-500/10 text-pink-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">MQL5</span>
+                        <span class="bg-pink-500/10 text-pink-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Pytest</span>
+                        <span class="bg-pink-500/10 text-pink-400 text-sm font-medium px-3 py-1 rounded-full transition-transform duration-200 hover:scale-110 cursor-pointer">Unity (C#)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 lg:py-32 reveal">
+             <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold tracking-tighter">Selected Works</h2>
+                <p class="text-lg text-zinc-400 mt-2">A selection of projects I'm proud of.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card 1 -->
+                <div class="card-bg rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                    <img src="https://placehold.co/600x400/18181b/818cf8?text=Chasers" alt="Chasers Game Screenshot" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Chasers - Multiplayer Game</h3>
+                        <p class="text-zinc-400 mb-4 text-sm flex-grow">An interactive multiplayer web game built with Node.js, WebSockets, and MongoDB for a real-time experience.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-green-500/10 text-green-400 text-xs font-medium px-2.5 py-1 rounded-full">Node.js</span>
+                            <span class="bg-yellow-500/10 text-yellow-400 text-xs font-medium px-2.5 py-1 rounded-full">JavaScript</span>
+                            <span class="bg-purple-500/10 text-purple-400 text-xs font-medium px-2.5 py-1 rounded-full">MongoDB</span>
+                            <span class="bg-orange-500/10 text-orange-400 text-xs font-medium px-2.5 py-1 rounded-full">HTML5</span>
+                            <span class="bg-blue-500/10 text-blue-400 text-xs font-medium px-2.5 py-1 rounded-full">CSS3</span>
+                            <span class="bg-teal-500/10 text-teal-400 text-xs font-medium px-2.5 py-1 rounded-full">Render</span>
+                        </div>
+                        <div class="flex gap-4 mt-auto pt-4 border-t border-zinc-800">
+                            <a href="https://www.chasers.run" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-2 px-3 rounded-lg transition-colors border border-zinc-700 text-sm flex items-center justify-center gap-2">Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+                            <a href="#" class="flex-1 text-center bg-zinc-900 text-zinc-600 font-medium py-2 px-3 rounded-lg cursor-not-allowed border border-zinc-800 text-sm flex items-center justify-center gap-2">Source Code <i data-lucide="github" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project Card 2 -->
+                <div class="card-bg rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                     <img src="https://placehold.co/600x400/18181b/4ade80?text=Waveformer" alt="Waveformer Project Screenshot" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">Waveformer: Time-Series Transformer</h3>
+                        <p class="text-zinc-400 mb-4 text-sm flex-grow">A specialized pipeline using a Transformer model to handle and predict time-series data with high accuracy, ideal for wave-like patterns.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-orange-500/10 text-orange-400 text-xs font-medium px-2.5 py-1 rounded-full">Python</span>
+                            <span class="bg-indigo-500/10 text-indigo-400 text-xs font-medium px-2.5 py-1 rounded-full">PyTorch</span>
+                            <span class="bg-yellow-500/10 text-yellow-400 text-xs font-medium px-2.5 py-1 rounded-full">TensorFlow</span>
+                            <span class="bg-pink-500/10 text-pink-400 text-xs font-medium px-2.5 py-1 rounded-full">Pandas</span>
+                        </div>
+                         <div class="flex gap-4 mt-auto pt-4 border-t border-zinc-800">
+                            <a href="#" class="flex-1 text-center bg-zinc-900 text-zinc-600 font-medium py-2 px-3 rounded-lg cursor-not-allowed border border-zinc-800 text-sm flex items-center justify-center gap-2">Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+                            <a href="https://github.com/Sieronix/TimeSeriesTransformer" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-2 px-3 rounded-lg transition-colors border border-zinc-700 text-sm flex items-center justify-center gap-2">Source Code <i data-lucide="github" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Project Card 3 -->
+                <div class="card-bg rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+                     <img src="https://placehold.co/600x400/18181b/f43f5e?text=TradeLink" alt="TradeLink Project Screenshot" class="w-full h-48 object-cover">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-semibold mb-2">TradeLink: MT4-Python Bridge</h3>
+                        <p class="text-zinc-400 mb-4 text-sm flex-grow">Bridges MT4, Python, and MySQL to create a seamless, extensible automated trading system for real-time data analysis and execution.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                             <span class="bg-blue-500/10 text-blue-400 text-xs font-medium px-2.5 py-1 rounded-full">Python</span>
+                             <span class="bg-zinc-500/10 text-zinc-400 text-xs font-medium px-2.5 py-1 rounded-full">MQL4</span>
+                             <span class="bg-red-500/10 text-red-400 text-xs font-medium px-2.5 py-1 rounded-full">C++</span>
+                             <span class="bg-purple-500/10 text-purple-400 text-xs font-medium px-2.5 py-1 rounded-full">MySQL</span>
+                        </div>
+                         <div class="flex gap-4 mt-auto pt-4 border-t border-zinc-800">
+                            <a href="#" class="flex-1 text-center bg-zinc-900 text-zinc-600 font-medium py-2 px-3 rounded-lg cursor-not-allowed border border-zinc-800 text-sm flex items-center justify-center gap-2">Live Demo <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+                            <a href="https://github.com/Sieronix/MT4-MySQL-Python-Bridge" target="_blank" rel="noopener noreferrer" class="flex-1 text-center bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-2 px-3 rounded-lg transition-colors border border-zinc-700 text-sm flex items-center justify-center gap-2">Source Code <i data-lucide="github" class="w-4 h-4"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 lg:py-32 text-center reveal">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Let's Build Together</h2>
+            <p class="max-w-2xl mx-auto text-lg text-zinc-400 mb-8">
+                Have a project in mind or just want to connect? Drop me a message.
+            </p>
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="max-w-xl mx-auto w-full flex flex-col gap-4">
+                <input type="hidden" name="access_key" value="09b32901-68dc-486b-8624-83516cfbdfd1">
+                <input type="text" name="name" placeholder="Your Name" class="card-bg w-full rounded-lg p-3 focus:ring-2 focus:ring-sky-500 focus:outline-none transition" required>
+                <input type="email" name="email" placeholder="Your Email" class="card-bg w-full rounded-lg p-3 focus:ring-2 focus:ring-sky-500 focus:outline-none transition" required>
+                <textarea name="message" placeholder="Your Message" rows="5" class="card-bg w-full rounded-lg p-3 focus:ring-2 focus:ring-sky-500 focus:outline-none transition" required></textarea>
+                <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3 px-6 rounded-lg transition-transform transform hover:scale-105">
+                    Send Message
+                </button>
+            </form>
+            <div id="form-result" class="mt-4 text-lg"></div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="text-center py-8 text-zinc-500 font-mono text-sm border-t border-zinc-900">
+        <p>Designed & Built by Omar Samha &copy; <span id="year"></span></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lucide Icons
+            lucide.createIcons();
+            
+            // --- Interactive Background ---
+            const canvas = document.getElementById('interactive-bg');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particlesArray;
+            const mouse = { x: null, y: null, radius: (canvas.height / 120) * (canvas.width / 120) };
+
+            window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
+            window.addEventListener('resize', () => {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+                mouse.radius = ((canvas.height / 120) * (canvas.width / 120));
+                initParticles();
+            });
+
+            class Particle {
+                constructor(x, y, dX, dY, size, color) {
+                    this.x = x; this.y = y; this.directionX = dX; this.directionY = dY;
+                    this.size = size; this.color = color;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                    ctx.fillStyle = '#818cf8';
+                    ctx.fill();
+                }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) this.directionX = -this.directionX;
+                    if (this.y > canvas.height || this.y < 0) this.directionY = -this.directionY;
+                    
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius + this.size) {
+                        if (mouse.x < this.x && this.x < canvas.width - this.size * 10) this.x += 3;
+                        if (mouse.x > this.x && this.x > this.size * 10) this.x -= 3;
+                        if (mouse.y < this.y && this.y < canvas.height - this.size * 10) this.y += 3;
+                        if (mouse.y > this.y && this.y > this.size * 10) this.y -= 3;
+                    }
+                    this.x += this.directionX;
+                    this.y += this.directionY;
+                    this.draw();
+                }
+            }
+
+            function initParticles() {
+                particlesArray = [];
+                let num = (canvas.height * canvas.width) / 9000;
+                for (let i = 0; i < num; i++) {
+                    let size = (Math.random() * 2) + 1;
+                    let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                    let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                    let dX = (Math.random() * 0.4) - 0.2;
+                    let dY = (Math.random() * 0.4) - 0.2;
+                    particlesArray.push(new Particle(x, y, dX, dY, size, '#818cf8'));
+                }
+            }
+
+            function connectParticles() {
+                let opacity = 1;
+                for (let a = 0; a < particlesArray.length; a++) {
+                    for (let b = a; b < particlesArray.length; b++) {
+                        let dist = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                        if (dist < (canvas.width / 7) * (canvas.height / 7)) {
+                            opacity = 1 - (dist / 20000);
+                            ctx.strokeStyle = `rgba(147, 197, 253, ${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animateParticles() {
+                requestAnimationFrame(animateParticles);
+                ctx.clearRect(0, 0, innerWidth, innerHeight);
+                for (let i = 0; i < particlesArray.length; i++) particlesArray[i].update();
+                connectParticles();
+            }
+            initParticles();
+            animateParticles();
+
+            // --- Typewriter Effect ---
+            const typewriterEl = document.getElementById('typewriter');
+            const roles = ["Full-Stack Engineer.", "Problem Solver.", "Creative Coder.", "Tech Enthusiast."];
+            let roleIndex = 0, charIndex = 0, isDeleting = false;
+            function type() {
+                const currentRole = roles[roleIndex];
+                if (isDeleting) charIndex--; else charIndex++;
+                typewriterEl.textContent = currentRole.substring(0, charIndex);
+                if (!isDeleting && charIndex === currentRole.length) {
+                    setTimeout(() => isDeleting = true, 2000);
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                }
+                setTimeout(type, isDeleting ? 100 : 150);
+            }
+            setTimeout(type, 1000);
+
+            // --- Scroll Animations ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            
+            // --- Mobile Menu ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+             // Close mobile menu when a link is clicked
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // --- Footer Year ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // --- Contact Form ---
+            const form = document.getElementById('contact-form');
+            const result = document.getElementById('form-result');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const object = Object.fromEntries(formData);
+                const json = JSON.stringify(object);
+                result.innerHTML = "Sending...";
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: json
+                })
+                .then(async (response) => {
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        result.innerHTML = "Form submitted successfully!";
+                        result.classList.add('text-green-500');
+                    } else {
+                        result.innerHTML = json.message;
+                        result.classList.add('text-red-500');
+                    }
+                })
+                .catch(error => {
+                    result.innerHTML = "Something went wrong!";
+                    result.classList.add('text-red-500');
+                })
+                .then(() => {
+                    form.reset();
+                    setTimeout(() => {
+                        result.innerHTML = '';
+                        result.classList.remove('text-green-500', 'text-red-500');
+                    }, 5000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
